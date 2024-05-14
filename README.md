@@ -266,7 +266,7 @@ import Link from "next/link";
 <Link href={"/about"} replace>Home</Link>
 ```
 
-### Active link
+### Active link with `usePathname`
 
 To detect **active links,** Next JS provide the `usePathname` destructured from `"next/navigation"`, and better **to invoque from within a layout component.**
 Use it or some of its method to style active links accordingly:
@@ -279,4 +279,15 @@ const pathName = usePathname();
 // within Link className prop apply conditional style with
 pathName === "/about"; // or
 pathName.startsWith("/about");
+```
+
+### Programmatic navigation with `useRouter`
+
+```typescript
+"use client";
+import { useRouter } from "next/navigation";
+// within client component
+const router = useRouter();
+// within some callback function internal to the component
+router.push("/") // or .replace("/") or .forward() and so on
 ```

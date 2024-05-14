@@ -11,6 +11,9 @@ export default function Home() {
         <Link className="link" href="/products">
           Products
         </Link>
+        <Link className="link" href="/order-product">
+          Order Products
+        </Link>
       </nav>
     </>
   );
