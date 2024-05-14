@@ -2,18 +2,14 @@ import React from "react";
 
 function AuthLayout({ children }: { children: React.ReactNode }) {
   return (
-    <>
+    <div className="div">
       <h3
-        style={{
-          margin: "0",
-          backgroundColor: "palegreen",
-          textAlign: "center",
-        }}
+      className="m-0 bg-[palegreen] text-center"
       >
         Credentials
       </h3>
       {children}
-    </>
+    </div>
   );
 }
 

@@ -24,11 +24,7 @@ function ProductLayout({ children }: { children: React.ReactNode }) {
     <>
       {children}
       <h3
-        style={{
-          margin: "0",
-          backgroundColor: "palevioletred",
-          textAlign: "center",
-        }}
+      className="m-0 bg-[palevioletred] text-center"
       >
         Featured Product
       </h3>

@@ -3,12 +3,7 @@ import React from "react";
 function Header() {
   return (
     <header
-      style={{
-        display: "flex",
-        flexDirection: "column",
-        alignItems: "center",
-        backgroundColor: "paleturquoise",
-      }}
+      className="flex flex-col items-center bg-[paleturquoise] text-center"
     >
       <h2>Header</h2>
     </header>

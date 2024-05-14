@@ -1,0 +1,32 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  h1,
+  h2,
+  h3,
+  h4 {
+    font-weight: 500;
+    margin-block-start: 0.25em;
+    margin-block-end: 0.5em;
+  }
+  h1 {
+    font-size: large;
+  }
+
+  h2 {
+    font-size: larger;
+  }
+
+  a {
+    text-decoration: none;
+  }
+  a:hover {
+    text-decoration: underline;
+  }
+}
+
+.div {
+	@apply px-3 py-4
+}
