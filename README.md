@@ -1,5 +1,7 @@
 # Next JS 14
 
+In Next JS all React components are server components by default unless initiated with the `"use client"` top directive. Since hooks can only be used in client component make sure start them with that directive.
+
 ## Routing
 
 ### The app router
@@ -27,7 +29,7 @@ export default function Review({
 
 ### Catch all segment
 
-To route to a ramdomly named segment mapping to anything use `[[...anyName]]`. _Example:_ `project/src/app/docs/[[...slug]]/page.tsx` 
+To route to a ramdomly named segment mapping to anything use `[[...anyName]]`. _Example:_ `project/src/app/docs/[[...slug]]/page.tsx`
 
 ```typescript
 export default function Docs({ params }: { params: { slug: string[] } }) {
@@ -66,19 +68,19 @@ It is perfectly ok to save component file next to reserved-named file within a s
 
 when you need to prevent Next JS from routing a folder just prefixe it with **underscore `_`**. However if you need a route to start with underscore you have to prefixe it with the encode version of it as `%F5`.
 
-|**app subfloder**|**url entered**|**http status**|
-|-|-|-|
-|`/_lib`|host/_lib|**404**|
-|`/%F5lib`|host/_lib|**200**|
+| **app subfloder** | **url entered** | **http status** |
+| ----------------- | --------------- | --------------- |
+| `/_lib`           | host/\_lib      | **404**         |
+| `/%F5lib`         | host/\_lib      | **200**         |
 
 ### Route group
 
 To enhance **DX** sometimes you need to group some specific folders within the same directory while keeping this directory out of url mapping by naming it `(directory)`. _Example:_
 
-|**app subfloder**|**url**|
-|-|-|
-|`/(auth)/login`|host/login|
-|`/(auth)/register`|host/register|
+| **app subfloder**  | **url**       |
+| ------------------ | ------------- |
+| `/(auth)/login`    | host/login    |
+| `/(auth)/register` | host/register |
 
 ## Layout
 
@@ -123,17 +125,16 @@ app/
 └── page.tsx
 ```
 
-|**url**|**`RootLayout {children}`**|**final UI**|
-|-|-|-|
-|/|`/page`|home page|
-|/products|`/producs/page`|products page|
-|/about|`/about/page`|about page|
-|/products/12|`/products/12/layout`|product 12 page (**Since it's in turn `this nested layout children`**)|
+| **url**      | **`RootLayout {children}`** | **final UI**                                                           |
+| ------------ | --------------------------- | ---------------------------------------------------------------------- |
+| /            | `/page`                     | home page                                                              |
+| /products    | `/producs/page`             | products page                                                          |
+| /about       | `/about/page`               | about page                                                             |
+| /products/12 | `/products/12/layout`       | product 12 page (**Since it's in turn `this nested layout children`**) |
 
 ### Route group layout
 
 When you need to apply a layouyt some route segments excluding some other segments at the same level use route groupe.
-
 
 ```bash
 app/(auth)/
@@ -161,8 +162,8 @@ For example defining the two following codes respectively in two different compo
 ```typescript
 // in app/about/page.tsx
 export const metadata = {
-  title: "About Codevolution"
-}
+  title: "About Codevolution",
+};
 // in app/produtcs/[productID]/page.tsx
 import { Metadata } from "next";
 
@@ -212,8 +213,8 @@ Sub route exporting metadata as `string`, will have it substitute with the **`"%
 ```typescript
 // app/blog/page.tsx
 export const metadata: Metadata = {
-  title:  "Blog",
-}
+  title: "Blog",
+};
 // page title => "Blog | Codevolution"
 ```
 
@@ -263,4 +264,19 @@ import Link from "next/link";
 <Link href={"/"}>Home</Link>
 // or replace in history current directory
 <Link href={"/about"} replace>Home</Link>
+```
+
+### Active link
+
+To detect **active links,** Next JS provide the `usePathname` destructured from `"next/navigation"`, and better **to invoque from within a layout component.**
+Use it or some of its method to style active links accordingly:
+
+```typescript
+"use client";
+import { usePathname } from "next/navigation";
+// within client component
+const pathName = usePathname();
+// within Link className prop apply conditional style with
+pathName === "/about"; // or
+pathName.startsWith("/about");
 ```
