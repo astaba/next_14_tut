@@ -15,14 +15,14 @@ function AuthRootLayout({ children }: { children: React.ReactNode }) {
 
   return (
     <>
-      <ul className="px-3 py-4 text-center flex bg-teal-100 p-0">
+      <ul className="flex bg-teal-100 p-0 px-3 py-4 text-center">
         {navLinks.map((link) => {
           const isActive = pathName.startsWith(link.href);
           return (
             <li key={link.name} className="me-4">
               <Link
                 href={link.href}
-                className={`mr-4 ${isActive ? "font-bold underline" : "text-blue-500 no-underline"}`}
+                className={`link ${isActive ? "text-blue-500" : ""}`}
               >
                 {link.name}
               </Link>

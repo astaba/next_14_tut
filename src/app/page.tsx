@@ -4,9 +4,14 @@ export default function Home() {
   return (
     <>
       <h1>Welcome home!</h1>
-      <Link href="/blog">Blog</Link>
-      &nbsp;
-      <Link href="/products">Products</Link>
+      <nav className="">
+        <Link className="link" href="/blog">
+          Blog
+        </Link>
+        <Link className="link" href="/products">
+          Products
+        </Link>
+      </nav>
     </>
   );
 }

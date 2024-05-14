@@ -3,6 +3,7 @@
 @tailwind utilities;
 
 @layer base {
+
   h1,
   h2,
   h3,
@@ -11,6 +12,7 @@
     margin-block-start: 0.25em;
     margin-block-end: 0.5em;
   }
+
   h1 {
     font-size: large;
   }
@@ -22,11 +24,20 @@
   a {
     text-decoration: none;
   }
+
   a:hover {
     text-decoration: underline;
   }
 }
 
 .div {
-	@apply px-3 py-4
+  @apply px-3 py-4;
+}
+
+.link {
+  @apply mr-4 font-bold no-underline hover:underline;
+}
+
+.btn {
+  @apply rounded border border-r-teal-800 transition-all px-5 py-2 font-bold tracking-widest text-black hover:bg-cyan-300;
 }
