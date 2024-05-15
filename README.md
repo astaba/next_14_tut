@@ -12,7 +12,7 @@ While the `app` folder is mapped to the **url domaine name** every subfolder end
 
 Dynamic routes are created by wrapping square brackets around a url segment (`app/[productID]/reviews/[reviewID]/page.tsx`). To retreive those segments Within the subcomponents use the `param prop`, an object with a property for each segment:
 
-```typescript
+```tsx
 export default function Review({
   params,
 }: {
@@ -31,7 +31,7 @@ export default function Review({
 
 To route to a ramdomly named segment mapping to anything use `[[...anyName]]`. _Example:_ `project/src/app/docs/[[...slug]]/page.tsx`
 
-```typescript
+```tsx
 export default function Docs({ params }: { params: { slug: string[] } }) {
 	 // You can taylor page content according to route
   const content = (function () {
@@ -56,7 +56,7 @@ export default function Docs({ params }: { params: { slug: string[] } }) {
 
 It can be customized by providing each route with a `not-found` file. Or loading that file from a nested route with the function:
 
-```typescript
+```tsx
 import { notFound } from "next/navigation";
 ```
 
@@ -86,7 +86,7 @@ To enhance **DX** sometimes you need to group some specific folders within the s
 
 To apply consistent layout to a route and all its subroutes use the `layout` file, which receive as `children React.node` the `page` file or all sub routes.
 
-```typescript
+```tsx
 export default function RootLayout({
   children,
 }: {
@@ -150,6 +150,35 @@ app/(auth)/
 
 While `/login` and `/register` url will have some common UI from `/app/(auth)/(with-ayth-layout)/layout.tsx` file, `/forgot-password` url won't have it.
 
+### Templates
+
+**Why?**  
+Unlike layouts that persist across routes and maintain state, templates create a new instance for each of their children on navigation. This means that when a user navigates between routes that share a template, a new instance of the child is mounted, DOM elements are recreated, state is not preserved in Client Components, and effects are re-synchronized. Useful in those cases:
+
+- To resynchronize `useEffect` on navigation.
+- To reset the state of a child Client Components on navigation.
+
+**How?**  
+A template can be defined by exporting a default React component from a `template.js` file. The component should accept a children prop.
+
+**Where?**
+
+```bash
+ app
+ ├── layout.tsx
+ ├── template.tsx
+ └── page.tsx
+```
+
+In terms of nesting, `template.js` is rendered between a layout and its children. Here's a simplified output:
+
+```tsx
+<Layout>
+  {/* Note that the template is given a unique key. */}
+  <Template key={routeParam}>{children}</Template>
+</Layout>
+```
+
 ## Metadata and SEO
 
 For SEO optimization, Next JS introduce the **Metadata API** to taylor metadata for each page. For this either:
@@ -159,7 +188,7 @@ For SEO optimization, Next JS introduce the **Metadata API** to taylor metadata 
 
 For example defining the two following codes respectively in two different components, will overwrite the default **page `title`** from the `RootLayout` component `metadata` object.
 
-```typescript
+```tsx
 // in app/about/page.tsx
 export const metadata = {
   title: "About Codevolution",
@@ -196,7 +225,7 @@ app/
 
 Starting from the `RootLayout` component, the following code will default the title of any route with metadata export to **"Next.js - Codevolution"**:
 
-```typescript
+```tsx
 // RootLayout component
 export const metadata: Metadata = {
   title: {
@@ -210,7 +239,7 @@ export const metadata: Metadata = {
 
 Sub route exporting metadata as `string`, will have it substitute with the **`"%s"`** string from the parent route and assigned the title of the resulting **title template property.**
 
-```typescript
+```tsx
 // app/blog/page.tsx
 export const metadata: Metadata = {
   title: "Blog",
@@ -220,7 +249,7 @@ export const metadata: Metadata = {
 
 For sub route to overwrite that default title or template, they must either, export `metadata` as an object with an `absolute` property:
 
-```typescript
+```tsx
 // app/about/page.tsx
 export const metadata: Metadata = {
   title: {
@@ -232,7 +261,7 @@ export const metadata: Metadata = {
 
 or export the `generateMetadata` function (optionally asynchronous) returning the very object.
 
-```typescript
+```tsx
 // file: app/products/[productId]/page.tsx
 // url: host/products/12
 export const generateMetadata = async ({
@@ -257,7 +286,7 @@ export const generateMetadata = async ({
 
 Navigation is simply achieved by using the Next JS `Link` component the extends the HTML anchor `<a></a>` element:
 
-```typescript
+```tsx
 // import
 import Link from "next/link";
 // use
@@ -271,7 +300,7 @@ import Link from "next/link";
 To detect **active links,** Next JS provide the `usePathname` destructured from `"next/navigation"`, and better **to invoque from within a layout component.**
 Use it or some of its method to style active links accordingly:
 
-```typescript
+```tsx
 "use client";
 import { usePathname } from "next/navigation";
 // within client component
@@ -283,7 +312,7 @@ pathName.startsWith("/about");
 
 ### Programmatic navigation with `useRouter`
 
-```typescript
+```tsx
 "use client";
 import { useRouter } from "next/navigation";
 // within client component

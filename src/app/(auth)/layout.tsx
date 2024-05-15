@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
@@ -12,6 +12,7 @@ const navLinks = [
 
 function AuthRootLayout({ children }: { children: React.ReactNode }) {
   const pathName = usePathname();
+  const [text, setText] = useState("");
 
   return (
     <>
@@ -30,6 +31,13 @@ function AuthRootLayout({ children }: { children: React.ReactNode }) {
           );
         })}
       </ul>
+      <div>
+        <input
+          value={text}
+          onChange={(e) => setText(e.target.value)}
+          className="m-1 rounded border border-sky-300 px-2 font-bold"
+        />
+      </div>
       {children}
     </>
   );
