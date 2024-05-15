@@ -18,7 +18,6 @@ export default function Review({
 }: {
   params: { productId: string; reviewId: string };
 }) {
-
   return (
     <h1>
       Review {params.reviewId} of product {params.productId}
@@ -33,7 +32,7 @@ To route to a ramdomly named segment mapping to anything use `[[...anyName]]`. _
 
 ```tsx
 export default function Docs({ params }: { params: { slug: string[] } }) {
-	 // You can taylor page content according to route
+  // You can taylor page content according to route
   const content = (function () {
     if (params.slug) {
       switch (params.slug.length) {
@@ -43,7 +42,7 @@ export default function Docs({ params }: { params: { slug: string[] } }) {
           return `Viewing docs for features ${params.slug[0]} and concept ${params.slug[1]}`;
       }
     } else {
-	  // Or return a default content in case of no ramdom segment
+      // Or return a default content in case of no ramdom segment
       return "Docs home page";
     }
   })();
@@ -318,5 +317,46 @@ import { useRouter } from "next/navigation";
 // within client component
 const router = useRouter();
 // within some callback function internal to the component
-router.push("/") // or .replace("/") or .forward() and so on
+router.push("/"); // or .replace("/") or .forward() and so on
 ```
+
+## Loading UI and Straming
+
+The special file `loading.js` helps you create from the server meaningful Loading UI with **React Suspense**.
+
+**Where?**
+
+```bash
+ app
+ ├── layout.tsx
+ └── dashboard
+     ├── layout.tsx
+     ├── loading.tsx
+     └── page.tsx
+```
+
+**How?**
+
+```tsx
+export default function Loading() {
+  // You can add any UI inside Loading, including a Skeleton.
+  return <LoadingSkeleton />;
+}
+```
+
+In the same folder, `loading.js` will be nested inside `layout.js`. It will automatically wrap the `page.js` file and any children below in a `<Suspense>` boundary.
+
+```tsx
+// Component hierarchy
+// Where Suspense is Layout {children}
+<Layout>
+  <Header />
+  <SideNav />
+  <Suspense fallback={<Loading />}>
+    <Page />
+  </Suspense>
+  <Footer />
+</Layout>
+```
+
+**Recommendation:** Use the `loading.js` convention for route segments (layouts and pages) as Next.js optimizes this functionality.
