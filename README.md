@@ -4,6 +4,16 @@ In Next JS all React components are server components by default unless initiate
 
 ## File convention
 
+```bash
+ app/
+ ├── layout.tsx
+ ├── template.tsx
+ ├── error.tsx
+ ├── loading.tsx
+ ├── not-found.tsx
+ └── page.tsx
+```
+
 ```tsx
 <Layout>
   <Template>
@@ -336,7 +346,7 @@ const router = useRouter();
 router.push("/"); // or .replace("/") or .forward() and so on
 ```
 
-## Loading UI and Straming
+## Loading UI and Streaming
 
 The special file `loading.js` helps you create from the server meaningful Loading UI with **React Suspense**.
 
@@ -398,3 +408,17 @@ export default function ErrorBoundary({ error }: { error: Error }) {
   return <h3>{error.message}</h3>;
 }
 ```
+
+### Recovering from errors
+
+Use `reset`, an prop from the `error` instance, to reset the error boundary. When executed, the function will try to re-render the Error boundary's contents. If successful, the fallback error component is replaced with the result of the re-render.
+
+Can be used to prompt the user to attempt to recover from the error.
+
+**Good to know:**
+
+- error.js boundaries **must be Client Components**, hence the `page` component too.
+- In Production builds, errors forwarded from Server Components will be stripped of specific error details to avoid leaking sensitive information.
+- An `error.js` boundary will not handle errors thrown in a `layout.js` component in the same segment because the error boundary is nested inside that layouts component.
+- To handle errors for a specific layout, place an `error.js` file in the layouts parent segment.
+- To handle errors within the root layout or template, use a variation of error.js called `app/global-error.js`.

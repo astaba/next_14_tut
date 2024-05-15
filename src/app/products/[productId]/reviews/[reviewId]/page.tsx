@@ -1,3 +1,4 @@
+"use client";
 import { notFound } from "next/navigation";
 
 function getRandomInt(count: number) {
@@ -14,7 +15,7 @@ export default function Review({
   }
 
   const count = getRandomInt(100);
-  if (count < 75) {
+  if (count < 60) {
     console.log({ count: count });
     throw new Error(`could not load review ${params.reviewId} of product ${params.productId}
 `);
