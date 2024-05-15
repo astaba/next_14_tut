@@ -16,7 +16,7 @@ export default function Review({
   const count = getRandomInt(100);
   if (count < 75) {
     console.log({ count: count });
-    throw new Error(`Error in Review ${params.reviewId} of product ${params.productId}
+    throw new Error(`could not load review ${params.reviewId} of product ${params.productId}
 `);
   }
 

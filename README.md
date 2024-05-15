@@ -2,6 +2,22 @@
 
 In Next JS all React components are server components by default unless initiated with the `"use client"` top directive. Since hooks can only be used in client component make sure start them with that directive.
 
+## File convention
+
+```tsx
+<Layout>
+  <Template>
+    <ErrorBoundary fallback={<Error />}>
+      <Suspense fallback={<Loading />}>
+        <ErrorBoundary fallback={<NotFound />}>
+          <Page />
+        </ErrorBoundary>
+      </Suspense>
+    </ErrorBoundary>
+  </Template>
+</Layout>
+```
+
 ## Routing
 
 ### The app router
@@ -363,4 +379,22 @@ In the same folder, `loading.js` will be nested inside `layout.js`. It will auto
 
 ## Error Handling
 
-In case of error within `page` files without error boundary, the entire application breaks, and worse,  _**in production**_ it happens without any hint for the user which is a very bad UX.
+In case of error within `page` files without error boundary, the entire application breaks, and worse, _**in production**_ it happens without any hint for the user which is a very bad UX.
+
+It is a waste to allow a deeply nested component to break an entire application. To solve this, create an error UI component in an `error` file next to the `page` around which you need Next JS to implement an `ErrorBoundary`. Now error bubbling is catch and a nice UI is rendered.
+
+```tsx
+"use client";
+export default function ErrorBoundary() {
+  return <h3>Error occured in rewieId</h3>;
+}
+```
+
+You can even display the specific error message.
+
+```tsx
+"use client";
+export default function ErrorBoundary({ error }: { error: Error }) {
+  return <h3>{error.message}</h3>;
+}
+```
