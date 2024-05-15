@@ -360,3 +360,7 @@ In the same folder, `loading.js` will be nested inside `layout.js`. It will auto
 ```
 
 **Recommendation:** Use the `loading.js` convention for route segments (layouts and pages) as Next.js optimizes this functionality.
+
+## Error Handling
+
+In case of error within `page` files without error boundary, the entire application breaks, and worse,  _**in production**_ it happens without any hint for the user which is a very bad UX.
