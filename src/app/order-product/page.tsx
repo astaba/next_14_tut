@@ -10,7 +10,7 @@ export default function OrderProduct() {
   }
 
   return (
-    <div className="div">
+    <div className="">
       <h2>Order Product</h2>
       <button type="button" onClick={handleClick} className="btn">
         Order

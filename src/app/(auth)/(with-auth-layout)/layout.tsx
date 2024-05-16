@@ -2,7 +2,7 @@ import React from "react";
 
 function AuthLayout({ children }: { children: React.ReactNode }) {
   return (
-    <div className="div">
+    <div className="">
       <h3
       className="m-0 bg-[palegreen] text-center"
       >
