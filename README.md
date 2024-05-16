@@ -89,7 +89,7 @@ import { notFound } from "next/navigation";
 
 It is perfectly ok to save component file next to reserved-named file within a same route folder. Next JS won't map them to any route. However it is better to keep them in some `component` folder next to the `app` folder.
 
-### Private route
+### Private folders
 
 when you need to prevent Next JS from routing a folder just prefixe it with **underscore `_`**. However if you need a route to start with underscore you have to prefixe it with the encode version of it as `%F5`.
 
@@ -106,6 +106,11 @@ To enhance **DX** sometimes you need to group some specific folders within the s
 | ------------------ | ------------- |
 | `/(auth)/login`    | host/login    |
 | `/(auth)/register` | host/register |
+
+### Prallel routes
+
+**Why?**  
+Using components composition it is possible to render a UI made up of multiple different component. However, in case some of these components have navigable alternate UI, neither it would possible to access while keeping unchanged the surrounding other components and, nor would the sub-component sub-url be sharable.
 
 ## Layout
 

@@ -14,6 +14,9 @@ export default function Home() {
         <Link className="link" href="/order-product">
           Order Products
         </Link>
+        <Link className="link" href="/complex-dashboard">
+          Complex Dashboard
+        </Link>
       </nav>
     </>
   );
