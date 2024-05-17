@@ -172,6 +172,10 @@ By default, Next.js keeps track of the active state (or subpage) for each slot. 
 > **Good to know:**  
 > The 404 for unmatched routes helps ensure that you don't accidentally render a parallel route on a page that it was not intended for.
 
+#### Conditional rendering
+
+Leveraging the `layout` file and its `slot` props you can use **parallel routes** to conditionally render some routes.
+
 ## Layout
 
 To apply consistent layout to a route and all its subroutes use the `layout` file, which receive as `children React.node` the `page` file or all sub routes.

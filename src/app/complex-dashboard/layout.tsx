@@ -3,13 +3,18 @@ export default function Layout({
   notifications,
   revenue,
   users,
+  login,
 }: {
   children: React.ReactNode;
   notifications: React.ReactNode;
   revenue: React.ReactNode;
   users: React.ReactNode;
+  login: React.ReactNode;
 }) {
-  return (
+  // toggle boolean and check conditional slot rendering in UI
+  const isLoggedIn = true;
+
+  return isLoggedIn ? (
     <>
       <div>{children}</div>
       <div className="flex justify-stretch">
@@ -20,5 +25,7 @@ export default function Layout({
         <div className="flex">{notifications}</div>
       </div>
     </>
+  ) : (
+    login
   );
 }
