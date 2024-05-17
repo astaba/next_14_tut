@@ -12,7 +12,7 @@ export default function Layout({
   login: React.ReactNode;
 }) {
   // toggle boolean and check conditional slot rendering in UI
-  const isLoggedIn = true;
+  const isLoggedIn = false;
 
   return isLoggedIn ? (
     <>
