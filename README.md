@@ -176,6 +176,43 @@ By default, Next.js keeps track of the active state (or subpage) for each slot. 
 
 Leveraging the `layout` file and its `slot` props you can use **parallel routes** to conditionally render some routes.
 
+### Intercepting routes
+
+**Why?**  
+Intercepting routes allows you to load a route from another part of your application within the current layout (via its `page`). However, when navigating to that route by clicking a shared URL or by refreshing the page, the authentic `page` from that route should render instead of the the intercept folder `page`.
+
+**How?**  
+Intercepting routes can be defined with the `(..)` convention, which is similar to relative path convention `../` but for segments:
+
+- `(.)` to match segments on the same level
+- `(..)` to match segments one level above
+- `(..)(..)` to match segments two levels above (**partially broken**)
+- `(...)` to match segments from the root app directory
+
+> **Good to know:**  
+> Note that the `(..)` convention is based on route segments, not the file-system.
+
+**Example:**  
+
+```bash
+app  #-----------------------  1
+├── feed  #------------------  2
+│   ├── (..)photo  #---------  3
+│   │   └── [id]  #----------  4
+│   │       └── page.tsx  #--  5
+│   ├── layout.tsx  #--------  6
+│   └── page.tsx  #----------  7
+├── photo  #-----------------  8
+│   └── [id]  #--------------  9
+│       └── page.tsx  #------ 10
+├── layout.tsx  #------------ 11
+└── page.tsx  #-------------- 12
+```
+
+While connected to `/feed` route, and having **line #7 UI** displayed you have a link to (among other `id`) `/photo/23` route but don't want to display **line #10 UI.** To do that, you can **intercept** that route with **line #3 (..)photo** and display whatever you wish with **line #4 and #5.**
+
+The very UI from **line #10** will be displayed only if you share `/photo/23` url (**which is among the purposes behind intercept route**) or if you refresh **line #5 UI.**
+
 ## Layout
 
 To apply consistent layout to a route and all its subroutes use the `layout` file, which receive as `children React.node` the `page` file or all sub routes.
