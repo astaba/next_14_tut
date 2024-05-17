@@ -160,6 +160,18 @@ export default function Layout({
   Parallel Routes can be streamed independently, allowing you to define independent `error` and `loading` states for each route
 - **Sub-navigation.**  
   Each slop of your dashboard can essentially function as a mini-application, complete with its own navigation and state management.
+
+#### Unmatched routes
+
+By default, Next.js keeps track of the active state (or subpage) for each slot. However, the content rendered within a slot will depend on the type of navigation:
+
+- **Soft Navigation:** During client-side navigation, Next.js will perform a partial render, changing the subpage within the slot, while maintaining the other slot's active subpages, even if they don't match the current URL.
+- **Hard Navigation:** After a full-page load (browser refresh), Next.js cannot determine the active state for the slots that don't match the current URL, as soon as those **slots are destructured from the `layout prop`**. Instead, it will **render a `default.js` file for each the unmatched slots**, or **404 if only one `default.js` is missing,** including the `children`'s one.
+- The `default.js` file can mirror the `page.js` or **be completely different.**
+
+> **Good to know:**  
+> The 404 for unmatched routes helps ensure that you don't accidentally render a parallel route on a page that it was not intended for.
+
 ## Layout
 
 To apply consistent layout to a route and all its subroutes use the `layout` file, which receive as `children React.node` the `page` file or all sub routes.

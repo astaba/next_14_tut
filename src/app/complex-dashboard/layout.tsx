@@ -5,8 +5,8 @@ export default function Layout({
   users,
 }: {
   children: React.ReactNode;
-  revenue: React.ReactNode;
   notifications: React.ReactNode;
+  revenue: React.ReactNode;
   users: React.ReactNode;
 }) {
   return (
