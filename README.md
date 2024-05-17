@@ -112,6 +112,54 @@ To enhance **DX** sometimes you need to group some specific folders within the s
 **Why?**  
 Using components composition it is possible to render a UI made up of multiple different component. However, in case some of these components have navigable alternate UI, neither it would possible to access while keeping unchanged the surrounding other components and, nor would the sub-component sub-url be sharable.
 
+**How?**
+
+- Parallel routes are created using named **slots**. Slots are defined with the `@folder` convention. For example, the following file structure defines two slots: `@analytics` and `@team`:
+
+```bash
+ app
+  ├──@analytics
+  │   └── page.tsx
+  ├──@team
+  │   └── page.tsx
+  ├── layout.tsx
+  └── page.tsx
+```
+
+- Slots are passed as `props` to the shared parent **layout**. For the example above, the component in `app/layout.js` now accepts the `@analytics` and `@team` slots `props,` and can render them in parallel alongside the children `prop`:
+
+```tsx
+export default function Layout({
+  children,
+  team,
+  analytics,
+}: {
+  children: React.ReactNode;
+  analytics: React.ReactNode;
+  team: React.ReactNode;
+}) {
+  return (
+    <>
+      {children}
+      {team}
+      {analytics}
+    </>
+  );
+}
+```
+
+- However, slots are not route segments and do not affect the URL structure. For example, for `/@analytics/views`, the URL will be **/views** since `@analytics` is a slot.
+
+> **Good to know:**  
+> The `children` prop is an implicit slot that does not need to be mapped to a folder. This means `app/page.js` is equivalent to `app/@children/page.js`.
+
+**Benefits:**
+
+- Ability to **split a single layout into various slots**, making the code more manageable.
+- **Independent route** handling.  
+  Parallel Routes can be streamed independently, allowing you to define independent `error` and `loading` states for each route
+- **Sub-navigation.**  
+  Each slop of your dashboard can essentially function as a mini-application, complete with its own navigation and state management.
 ## Layout
 
 To apply consistent layout to a route and all its subroutes use the `layout` file, which receive as `children React.node` the `page` file or all sub routes.
@@ -420,10 +468,10 @@ Use `reset`, an prop from the `error` instance, to reset the error boundary. Whe
 
 Can be used to prompt the user to attempt to recover from the error.
 
-**Good to know:**
-
-- error.js boundaries **must be Client Components**, hence the `page` component too.
-- In Production builds, errors forwarded from Server Components will be stripped of specific error details to avoid leaking sensitive information.
-- An `error.js` boundary will not handle errors thrown in a `layout.js` component in the same segment because the error boundary is nested inside that layouts component.
-- To handle errors for a specific layout, place an `error.js` file in the layouts parent segment.
-- To handle errors within the root layout or template, use a variation of error.js called `app/global-error.js`.
+> **Good to know:**
+>
+> - error.js boundaries **must be Client Components**, hence the `page` component too.
+> - In Production builds, errors forwarded from Server Components will be stripped of specific error details to avoid leaking sensitive information.
+> - An `error.js` boundary will not handle errors thrown in a `layout.js` component in the same segment because the error boundary is nested inside that layouts component.
+> - To handle errors for a specific layout, place an `error.js` file in the layouts parent segment.
+> - To handle errors within the root layout or template, use a variation of error.js called `app/global-error.js`.
