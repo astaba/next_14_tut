@@ -192,7 +192,7 @@ Intercepting routes can be defined with the `(..)` convention, which is similar 
 > **Good to know:**  
 > Note that the `(..)` convention is based on route segments, not the file-system.
 
-**Example:**  
+**Example:**
 
 ```bash
 app  #-----------------------  1
@@ -212,6 +212,15 @@ app  #-----------------------  1
 While connected to `/feed` route, and having **line #7 UI** displayed you have a link to (among other `id`) `/photo/23` route but don't want to display **line #10 UI.** To do that, you can **intercept** that route with **line #3 (..)photo** and display whatever you wish with **line #4 and #5.**
 
 The very UI from **line #10** will be displayed only if you share `/photo/23` url (**which is among the purposes behind intercept route**) or if you refresh **line #5 UI.**
+
+#### Modal
+
+**Parallel Routes** can be used together with **Intercepting Routes** to create modals. This allows you to solve common challenges when building modals, such as:
+
+- Making the modal content shareable through a URL.
+- Preserving context when the page is refreshed, instead of closing the modal.
+- Closing the modal on backwards navigation rather than going to the previous route.
+- Reopening the modal on forwards navigation.
 
 ## Layout
 
