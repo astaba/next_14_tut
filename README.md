@@ -79,11 +79,13 @@ export default function Docs({ params }: { params: { slug: string[] } }) {
 
 ### Not found page
 
-It can be customized by providing each route with a `not-found` file. Or loading that file from a nested route with the function:
+It can be customized by providing each route with a `not-found` file. Or loaded programmatically from within a route with the function:
 
 ```tsx
 import { notFound } from "next/navigation";
 ```
+
+For example: within a dynamic route the value of the dynamic segment doesn't match any available resource. Instead of letting the `error` fire (if any) calling the local `not-found` improve user experience.
 
 ### File colocation
 
